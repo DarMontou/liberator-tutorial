@@ -80,7 +80,8 @@
             {::id id})
   :post-redirect? true
   :location #(build-entry-url (get % :request) (get % ::id))
-  :handle-ok (fn [_]  @entries))
+  :handle-ok #(map (fn [id] (str (build-entry-url (get % :request) id)))
+                   (keys @entries)))
 
 (defresource entry-resource [id]
   :allowed-methods [:get :put :delete]
